@@ -7,7 +7,7 @@ import { dirname } from "path";
 
 const currentFilePath = fileURLToPath(import.meta.url);
 const currentDir = dirname(currentFilePath);
-const buildPath = path.join(currentDir, "../asterra_assignment_fe/build");
+const buildPath = path.join(currentDir, "../asterra_home_assignment_fe/build");
 
 const app = express();
 app.use(express.json());
@@ -29,7 +29,7 @@ app.use(
 
 app.get("/*", function (req, res) {
   res.sendFile(
-    path.join(currentDir, "../asterra_assignment_fe/build/index.html"),
+    path.join(currentDir, "../asterra_home_assignment_fe/build/index.html"),
     function (err) {
       if (err) {
         res.status(500).send(err);
