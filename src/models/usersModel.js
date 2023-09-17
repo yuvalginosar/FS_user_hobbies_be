@@ -1,5 +1,5 @@
-
 import {pool} from "./dbConnection.js"
+
 const createUser = async ({firstName, lastName, address, phoneNumber}) => {
     const query = {
       text: `
@@ -13,7 +13,6 @@ const createUser = async ({firstName, lastName, address, phoneNumber}) => {
     const client = await pool.connect();
     try {
       const result = await client.query(query);
-      console.log('New row inserted:', result.rows[0]);
     } catch (error) {
       console.error('Error inserting new row:', error);
     } finally {
@@ -45,7 +44,6 @@ const addHobby = async ({userId, hobby}) => {
 const getAllUsers = async () => {
   try {
     const allUsers = await pool.query('SELECT * FROM "YUVAL_GINOSAR".users');
-    console.log(allUsers.rows)
     return allUsers.rows;
   } catch (error) {
     throw error;
@@ -81,7 +79,6 @@ const getAllUsersAndHobbies = async () => {
     throw error;
   }
 }
-
 
 async function deleteUserAndHobbies(userId) {
   const client = await pool.connect();
