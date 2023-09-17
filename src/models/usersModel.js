@@ -1,26 +1,26 @@
-import {pool} from "./dbConnection.js"
+import { pool } from "./dbConnection.js";
 
-const createUser = async ({firstName, lastName, address, phoneNumber}) => {
-    const query = {
-      text: `
+const createUser = async ({ firstName, lastName, address, phoneNumber }) => {
+  const query = {
+    text: `
         INSERT INTO "YUVAL_GINOSAR".users (first_name, last_name, address, phone_number)
         VALUES ($1, $2, $3, $4)
         RETURNING *
       `,
-      values: [firstName, lastName, address, phoneNumber],
-    };
+    values: [firstName, lastName, address, phoneNumber],
+  };
 
-    const client = await pool.connect();
-    try {
-      const result = await client.query(query);
-    } catch (error) {
-      console.error('Error inserting new row:', error);
-    } finally {
-      client.release();
-    }
+  const client = await pool.connect();
+  try {
+    const result = await client.query(query);
+  } catch (error) {
+    console.error("Error inserting new row:", error);
+  } finally {
+    client.release();
+  }
 };
 
-const addHobby = async ({userId, hobby}) => {
+const addHobby = async ({ userId, hobby }) => {
   const query = {
     text: `
       INSERT INTO "YUVAL_GINOSAR".hobbies (user_id, hobby)
@@ -33,13 +33,13 @@ const addHobby = async ({userId, hobby}) => {
   const client = await pool.connect();
   try {
     const result = await client.query(query);
-    console.log('New hobby inserted:', result.rows[0]);
+    console.log("New hobby inserted:", result.rows[0]);
   } catch (error) {
-    console.error('Error inserting new hobby:', error);
+    console.error("Error inserting new hobby:", error);
   } finally {
     client.release();
   }
-}
+};
 
 const getAllUsers = async () => {
   try {
@@ -70,20 +70,20 @@ const getAllUsersAndHobbies = async () => {
       GROUP BY
         u.id, u.first_name, u.last_name, u.address, u.phone_number;
     `;
-    
+
     const result = await client.query(query);
     client.release();
-    
+
     return result.rows;
   } catch (error) {
     throw error;
   }
-}
+};
 
 async function deleteUserAndHobbies(userId) {
   const client = await pool.connect();
   try {
-    await client.query('BEGIN'); 
+    await client.query("BEGIN");
 
     const deleteHobbiesQuery = `
       DELETE FROM "YUVAL_GINOSAR".hobbies
@@ -97,9 +97,9 @@ async function deleteUserAndHobbies(userId) {
     `;
     await client.query(deleteUserQuery, [userId]);
 
-    await client.query('COMMIT'); 
+    await client.query("COMMIT");
   } catch (error) {
-    await client.query('ROLLBACK'); 
+    await client.query("ROLLBACK");
     throw error;
   } finally {
     client.release();
@@ -111,5 +111,5 @@ export default {
   getAllUsers,
   deleteUserAndHobbies,
   addHobby,
-  getAllUsersAndHobbies
+  getAllUsersAndHobbies,
 };
