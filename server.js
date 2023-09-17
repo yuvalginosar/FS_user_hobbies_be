@@ -16,7 +16,7 @@ app.use( '/users', userRoutes);
 
 app.use(express.static(buildPath));
 
-app.use(cors({ origin: ["http://localhost:5000", "http://localhost:3000"], credentials: true }));
+app.use(cors({ origin: ["http://localhost:5000", "http://localhost:3000", "http://54.158.63.25"], credentials: true }));
 
 app.get("/*", function (req, res) {
     res.sendFile(path.join(currentDir, "../asterra_home_assignment_fe/build/index.html"), function (err) {
