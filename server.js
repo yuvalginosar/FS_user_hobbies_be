@@ -7,7 +7,7 @@ import { dirname } from 'path';
 
 const currentFilePath = fileURLToPath(import.meta.url);
 const currentDir = dirname(currentFilePath);
-const buildPath = path.join(currentDir, "../asterra_assignment_fe/build");
+const buildPath = path.join(currentDir, "../asterra_home_assignment_fe/build");
 
 const app = express();
 app.use(express.json());
@@ -19,7 +19,7 @@ app.use(express.static(buildPath));
 app.use(cors({ origin: ["http://localhost:5000", "http://localhost:3000"], credentials: true }));
 
 app.get("/*", function (req, res) {
-    res.sendFile(path.join(currentDir, "../asterra_assignment_fe/build/index.html"), function (err) {
+    res.sendFile(path.join(currentDir, "../asterra_home_assignment_fe/build/index.html"), function (err) {
       if (err) {
         res.status(500).send(err);
       }
